@@ -3,28 +3,28 @@
 
 
 ## 📁 資料夾結構
-public/
-└── image/
-├── about/                # About 頁素材
-│   ├── about_1.jpeg
-│   ├── VincentTong.png
-│   └── about_bg.jpeg
-├── contact/
-│   └── mv2.jpg           # Contact Banner 背景圖
-└── wing_logo.png         # 網站 Logo
+    public/
+    └── image/
+    ├── about/                # About 頁素材
+    │   ├── about_1.jpeg
+    │   ├── VincentTong.png
+    │   └── about_bg.jpeg
+    ├── contact/
+    │   └── mv2.jpg           # Contact Banner 背景圖
+    └── wing_logo.png         # 網站 Logo
 
-app/
-├── page.tsx                  # 首頁
-├── about/
-│   └── page.tsx              # About Us 頁面
-├── services/
-│   └── page.tsx              # Services 服務頁
-├── portfolio/
-│   └── page.tsx              # Portfolio 作品集頁
-├── contact/
-│   └── page.tsx              # Contact 聯絡頁
-└── components/
-└── Navbar.tsx            # 導覽列（含手機漢堡 Toggle 選單）
+    app/
+    ├── page.tsx                  # 首頁
+    ├── about/
+    │   └── page.tsx              # About Us 頁面
+    ├── services/
+    │   └── page.tsx              # Services 服務頁
+    ├── portfolio/
+    │   └── page.tsx              # Portfolio 作品集頁
+    ├── contact/
+    │   └── page.tsx              # Contact 聯絡頁
+    └── components/
+    └── Navbar.tsx            # 導覽列（含手機漢堡 Toggle 選單）
 
 
 ### 🖼 圖片資源規範
