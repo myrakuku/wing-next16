@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+@layer utilities {
+  /* 撕裂紙張邊框效果 */
+  .tear-edge {
+    clip-path: polygon(
+      0% 8%, 3% 0%, 7% 6%, 11% 1%, 15% 7%, 19% 2%, 23% 8%, 27% 1%,
+      31% 7%, 35% 2%, 39% 9%, 43% 1%, 47% 6%, 51% 2%, 55% 8%, 59% 1%,
+      63% 7%, 67% 3%, 71% 9%, 75% 2%, 79% 7%, 83% 1%, 87% 8%, 91% 3%,
+      95% 7%, 100% 2%,
+      100% 92%, 96% 100%, 92% 94%, 88% 99%, 84% 93%, 80% 98%, 76% 92%,
+      72% 99%, 68% 93%, 64% 97%, 60% 91%, 56% 98%, 52% 92%, 48% 97%,
+      44% 91%, 40% 98%, 36% 92%, 32% 97%, 28% 91%, 24% 98%, 20% 92%,
+      16% 97%, 12% 91%, 8% 98%, 4% 93%, 0% 96%
+    );
+  }
+}
+
+
+body {
+  @apply bg-white text-gray-900 font-sans;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,8 +42,40 @@
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 3D 升降機：文字像立錐體一樣向前升起 */
+@keyframes lift-rig {
+  0% {
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+    text-shadow:
+      0 1px 0 #444,
+      0 2px 0 #333,
+      0 3px 0 #222,
+      0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(0.7) translateY(-1.2vw);
+    filter: blur(0.3px);
+    text-shadow:
+      0 -1px 0 #666,
+      0 -2px 0 #555,
+      0 -4px 0 #444,
+      0 -6px 0 #333,
+      0 -8px 0 #222,
+      0 -10px 12px rgba(0, 0, 0, 0.35);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+    text-shadow:
+      0 1px 0 #444,
+      0 2px 0 #333,
+      0 3px 0 #222,
+      0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@utility animate-3d-lift {
+  animation: lift-rig 4s ease-in-out infinite;
+  transform-origin: center center;
 }
