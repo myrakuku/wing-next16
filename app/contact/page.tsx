@@ -1,5 +1,47 @@
+"use client";
 import { Phone, Mail } from 'lucide-react';
 import Image from 'next/image';
+import { motion, type Variants } from "framer-motion";
+
+// 和About / Services 統一動畫設定，TS無錯
+const slideUp: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "tween",
+      duration: 0.7,
+      ease: "easeOut"
+    }
+  }
+};
+
+const slideLeft: Variants = {
+  hidden: { opacity: 0, x: -60 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "tween",
+      duration: 0.8,
+      ease: "easeOut"
+    }
+  }
+};
+
+const slideRight: Variants = {
+  hidden: { opacity: 0, x: 60 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "tween",
+      duration: 0.8,
+      ease: "easeOut"
+    }
+  }
+};
 
 export default function ContactPage() {
   return (
@@ -16,14 +58,26 @@ export default function ContactPage() {
           priority
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-[10vw] md:text-[7vw] font-black text-white">CONTACT US</h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "tween", duration: 1, ease: "easeOut" }}
+            className="text-[10vw] md:text-[7vw] font-black text-white"
+          >
+            CONTACT US
+          </motion.h1>
         </div>
       </div>
 
       <div className="container mt-10 mx-auto px-6 py-16">
         <div className="grid md:grid-cols-2 gap-12">
-          {/* Address */}
-          <div>
+          {/* Address 左邊，由左滑入 */}
+          <motion.div
+            variants={slideLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             <h3 className="text-2xl font-bold border-b pb-2 mb-4">Address</h3>
             <p className="text-gray-700">
               608 WING HING INDUSTRIAL BUILDING,<br />
@@ -31,10 +85,15 @@ export default function ContactPage() {
               KWUN TONG, KOWLOON<br />
               HONG KONG
             </p>
-          </div>
+          </motion.div>
 
-          {/* Contact Info */}
-          <div>
+          {/* Contact Info 右邊，由右滑入 */}
+          <motion.div
+            variants={slideRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             <h3 className="text-2xl font-bold border-b pb-2 mb-4">Contact</h3>
             <div className="space-y-4 text-gray-700">
               <p className="flex items-center gap-3">
@@ -46,18 +105,24 @@ export default function ContactPage() {
                 vt@wingcreativemedia.com
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Google Map */}
-        <div className="mt-20 h-[400px] grayscale">
+        {/* Google Map，由下往上滑入 */}
+        <motion.div
+          variants={slideUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-20 h-[400px] grayscale"
+        >
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3689.873241123041!2d114.22472211510317!3d22.31221118532317!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDE4JzQ0LjAiTiAxMTTCsDEzJzMwLjAiRQ!5e0!3m2!1sen!2shk!4v..."
             width="100%"
             height="100%"
             allowFullScreen
           ></iframe>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,8 +1,44 @@
-
+"use client";
 import Image from 'next/image';
 import Link from 'next/link';
 import PortfolioShimmerBanner from '@/components/PortfolioShimmerBanner';
+import { motion, type Variants } from "framer-motion";
 
+// 和全站統一動畫設定，TS無錯
+const slideUp: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "tween",
+      duration: 0.7,
+      ease: "easeOut"
+    }
+  }
+};
+
+const slideLeft: Variants = {
+  hidden: { opacity: 0, x: -60 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "tween",
+      duration: 0.8,
+      ease: "easeOut"
+    }
+  }
+};
+
+const containerStagger: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12
+    }
+  }
+};
 
 // ===== 作品集分類資料，左側選單 + 影片列表，全部用map渲染 =====
 const portfolioCategories = [
@@ -102,7 +138,6 @@ const portfolioCategories = [
     ]
   },
 ];
-
 // 客戶品牌Logo
 const brandLogos = [
   { src: '/image/portfolio/logo_1.png', alt: 'Brand 1' },
@@ -123,11 +158,16 @@ export default function PortfolioPage() {
         title="Portfolio"
         brandLogos={brandLogos}
       />
-
       {/* ===== 主內容：左側固定分類選單 + 右邊作品區 ===== */}
       <div className="container mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-10">
-        {/* 左邊固定 Category Selector */}
-        <aside className="lg:sticky lg:top-10 h-fit">
+        {/* 左邊固定 Category Selector 由左滑入 */}
+        <motion.aside
+          variants={slideLeft}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="lg:sticky lg:top-10 h-fit"
+        >
           <nav className="space-y-3">
             {portfolioCategories.map((cat) => (
               <Link
@@ -148,19 +188,33 @@ export default function PortfolioPage() {
               Contact us
             </Link>
           </div>
-        </aside>
+        </motion.aside>
 
-        {/* 右邊作品內容區，每個分類一個section，用id給左邊錨點跳轉 */}
+        {/* 右邊作品內容區 */}
         <div className="space-y-28">
           {portfolioCategories.map((category) => (
-            <section key={category.id} id={category.id}>
-              <h2 className="text-4xl text-black font-light text-center uppercase border-b border-gray-400 pb-2 mb-10 inline-block w-full">{category.label}</h2>
+            <motion.section
+              key={category.id}
+              id={category.id}
+              variants={containerStagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
+              <motion.h2
+                variants={slideUp}
+                className="text-4xl text-black font-light text-center uppercase border-b border-gray-400 pb-2 mb-10 inline-block w-full"
+              >
+                {category.label}
+              </motion.h2>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                 {category.videos.map((video, vidIdx) => {
                   const thumbUrl = `https://img.youtube.com/vi/${video.youtubeId}/maxresdefault.jpg`;
                   return (
-                    <a
+                    <motion.a
                       key={vidIdx}
+                      variants={slideUp}
                       href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -180,11 +234,11 @@ export default function PortfolioPage() {
                           </svg>
                         </div>
                       </div>
-                    </a>
+                    </motion.a>
                   );
                 })}
               </div>
-            </section>
+            </motion.section>
           ))}
         </div>
       </div>
